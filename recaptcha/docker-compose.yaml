@@ -1,0 +1,20 @@
+version: '3.1'
+
+services:
+
+  web:
+    container_name: recaptcha-web
+    image: nginx:1.15-alpine
+    depends_on:
+      - php
+    ports:
+      - "9999:80"
+    volumes:
+      - .:/home/app:ro
+      - ../.docker/local/nginx:/etc/nginx/conf.d:ro
+
+  php:
+    container_name: recaptcha-php
+    build: ../.docker/local/php
+    volumes:
+      - .:/home/app:rw
